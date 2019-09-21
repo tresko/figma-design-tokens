@@ -4,6 +4,8 @@
   "description": "Generate style guides in Figma from design tokens.",
   "main": "code.js",
   "scripts": {
+    "start": "webpack --mode=development --watch",
+    "build": "webpack --mode=production",
     "commit": "git-cz",
     "semantic-release": "semantic-release"
   },
@@ -30,11 +32,22 @@
     "cz-conventional-changelog": "3.0.2",
     "husky": "^3.0.5",
     "lint-staged": "^9.2.5",
+    "prettier": "^1.18.2",
     "semantic-release": "^15.13.24"
   },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "dependencies": {
+    "html-webpack-inline-source-plugin": "^0.0.10",
+    "html-webpack-plugin": "^3.2.0",
+    "style-loader": "^1.0.0",
+    "ts-loader": "^6.1.2",
+    "typescript": "^3.6.3",
+    "url-loader": "^2.1.0",
+    "webpack": "^4.40.2",
+    "webpack-cli": "^3.3.9"
   }
 }
