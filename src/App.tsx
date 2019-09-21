@@ -2,8 +2,28 @@ import React from "react";
 import * as ReactDOM from "react-dom";
 import { useDropzone } from "react-dropzone";
 
+import { ActionType } from "./core/actions";
+import { getConfigColors } from "./core/colors";
+
 function App() {
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
+
+  function handlePostMessage(pluginMessage: PluginMessage) {
+    parent.postMessage(
+      {
+        pluginMessage
+      },
+      "*"
+    );
+  }
+
+  function handleAddColors(colors: DSColor[]) {
+    const pluginMessage: PluginMessage = {
+      type: ActionType.ADD_COLORS,
+      payload: colors
+    };
+    handlePostMessage(pluginMessage);
+  }
 
   function onDrop(acceptedFiles) {
     const reader = new FileReader();
@@ -14,8 +34,9 @@ function App() {
       // Do whatever you want with the file contents
       const binaryStr = reader.result as string;
 
-      // Parse JSON
-      console.log(JSON.parse(binaryStr));
+      // Get config
+      const config = JSON.parse(binaryStr);
+      handleAddColors(getConfigColors(config));
     };
 
     acceptedFiles.forEach(file => reader.readAsBinaryString(file));
