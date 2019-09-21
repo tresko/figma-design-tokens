@@ -1,40 +1,32 @@
-import * as React from "react";
+import React from "react";
 import * as ReactDOM from "react-dom";
+import { useDropzone } from "react-dropzone";
 
-class App extends React.Component {
-  textbox: HTMLInputElement;
+function App() {
+  const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
-  countRef = (element: HTMLInputElement) => {
-    if (element) element.value = "5";
-    this.textbox = element;
-  };
+  function onDrop(acceptedFiles) {
+    const reader = new FileReader();
 
-  onCreate = () => {
-    const count = parseInt(this.textbox.value, 10);
-    parent.postMessage(
-      { pluginMessage: { type: "create-rectangles", count } },
-      "*"
-    );
-  };
+    reader.onabort = () => console.log("file reading was aborted");
+    reader.onerror = () => console.log("file reading has failed");
+    reader.onload = () => {
+      // Do whatever you want with the file contents
+      const binaryStr = reader.result as string;
 
-  onCancel = () => {
-    parent.postMessage({ pluginMessage: { type: "cancel" } }, "*");
-  };
+      // Parse JSON
+      console.log(JSON.parse(binaryStr));
+    };
 
-  render() {
-    return (
-      <div>
-        <h2>Rectangle Creator</h2>
-        <p>
-          Count: <input ref={this.countRef} />
-        </p>
-        <button id="create" onClick={this.onCreate}>
-          Create
-        </button>
-        <button onClick={this.onCancel}>Cancel</button>
-      </div>
-    );
+    acceptedFiles.forEach(file => reader.readAsBinaryString(file));
   }
+
+  return (
+    <button {...getRootProps()}>
+      <input {...getInputProps()} accept="application/json" />
+      <p>Drag 'n' drop some files here, or click to select files</p>
+    </button>
+  );
 }
 
 ReactDOM.render(<App />, document.getElementById("react-page"));
