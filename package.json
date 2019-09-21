@@ -1,0 +1,40 @@
+{
+  "name": "figma-design-tokens",
+  "version": "0.0.0-development",
+  "description": "Generate style guides in Figma from design tokens.",
+  "main": "code.js",
+  "scripts": {
+    "commit": "git-cz",
+    "semantic-release": "semantic-release"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tresko/figma-design-tokens.git"
+  },
+  "keywords": [
+    "figma",
+    "design",
+    "tokens",
+    "design",
+    "system",
+    "style",
+    "guides"
+  ],
+  "author": "Miha Sedej",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tresko/figma-design-tokens/issues"
+  },
+  "homepage": "https://github.com/tresko/figma-design-tokens#readme",
+  "devDependencies": {
+    "cz-conventional-changelog": "3.0.2",
+    "husky": "^3.0.5",
+    "lint-staged": "^9.2.5",
+    "semantic-release": "^15.13.24"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}
